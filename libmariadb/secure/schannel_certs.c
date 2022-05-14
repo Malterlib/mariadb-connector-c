@@ -29,6 +29,7 @@
   with corresponding _WIN32_WINNT
  */
 #ifdef _WIN32_WINNT
+#undef NTDDI_VERSION
 #undef _WIN32_WINNT
 #define _WIN32_WINNT 0x0601
 #endif
