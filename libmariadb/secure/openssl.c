@@ -334,7 +334,7 @@ static int ma_tls_set_certs(MYSQL *mysql, SSL_CTX *ctx)
         mysql->options.ssl_cipher[0] != 0))
   {
     if(
-#ifdef TLS1_3_VERSION
+#if defined(TLS1_3_VERSION) && !defined(OPENSSL_IS_BORINGSSL)
        SSL_CTX_set_ciphersuites(ctx, mysql->options.ssl_cipher) == 0 &&
 #endif
        SSL_CTX_set_cipher_list(ctx, mysql->options.ssl_cipher) == 0)
@@ -493,7 +493,7 @@ unsigned int ma_tls_get_peer_cert_info(MARIADB_TLS *ctls, uint hash_size)
   {
     if ((cert= SSL_get_peer_certificate(ssl)))
     {
-  #if OPENSSL_VERSION_NUMBER >= 0x10101000L
+  #if OPENSSL_VERSION_NUMBER >= 0x10101000L && !defined(OPENSSL_IS_BORINGSSL)
       const ASN1_TIME *not_before= X509_get0_notBefore(cert),
                       *not_after= X509_get0_notAfter(cert);
       ASN1_TIME_to_tm(not_before, (struct tm *)&ctls->cert_info.not_before);
