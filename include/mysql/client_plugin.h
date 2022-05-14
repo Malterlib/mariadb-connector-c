@@ -26,6 +26,8 @@
 #ifndef MYSQL_CLIENT_PLUGIN_INCLUDED
 #define MYSQL_CLIENT_PLUGIN_INCLUDED
 
+#include "../errmsg.h"
+
 #ifndef MYSQL_ABI_CHECK
 #include <stdarg.h>
 #include <stdlib.h>
