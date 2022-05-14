@@ -39,7 +39,6 @@
 #include <ma_string.h>
 #include <ma_pthread.h>
 
-#include "errmsg.h"
 #include <mysql/client_plugin.h>
 
 #ifndef WIN32
