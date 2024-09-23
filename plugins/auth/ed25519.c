@@ -39,6 +39,8 @@
 
 #ifndef WIN32
 #include <dlfcn.h>
+#else
+#define _Thread_local __declspec(thread)
 #endif
 
 #if defined(HAVE_WINCRYPT)
