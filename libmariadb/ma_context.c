@@ -676,12 +676,12 @@ my_context_destroy(struct my_context *c)
 int
 my_context_spawn(struct my_context *c, void (*f)(void *), void *d)
 {
-  register int ret asm("w0");
-  register void (*f_reg)(void *) asm("x1") = f;
-  register void *d_reg asm("x2") = d;
-  register void *stack asm("x13") = c->stack_top;
+  register int ret __asm__("w0");
+  register void (*f_reg)(void *) __asm__("x1") = f;
+  register void *d_reg __asm__("x2") = d;
+  register void *stack __asm__("x13") = c->stack_top;
   /* Need this in callee-save register to preserve in function call. */
-  register const uint64_t *save asm("x19") = &c->save[0];
+  register const uint64_t *save __asm__("x19") = &c->save[0];
 
   /*
     There are a total of 20 callee-save registers (including frame pointer and
@@ -764,9 +764,9 @@ my_context_spawn(struct my_context *c, void (*f)(void *), void *d)
 int
 my_context_continue(struct my_context *c)
 {
-  register int ret asm("w0");
+  register int ret __asm__("w0");
   /* Need this in callee-save register to preserve in function call. */
-  register const uint64_t *save asm("x19") = &c->save[0];
+  register const uint64_t *save __asm__("x19") = &c->save[0];
 
   __asm__ __volatile__
     (
@@ -873,7 +873,7 @@ my_context_continue(struct my_context *c)
 int
 my_context_yield(struct my_context *c)
 {
-  register const uint64_t *save asm("x19") = &c->save[0];
+  register const uint64_t *save __asm__("x19") = &c->save[0];
   __asm__ __volatile__
     (
      "ldp x13, x11, [%[save], #0]\n\t"
