@@ -156,6 +156,7 @@ static my_bool is_group(char *ptr, const char **groups)
   return 0;
 }
 
+#ifndef _WIN32 /* The Windows include scan filters by extension in its FindFirstFile pattern */
 static my_bool is_config_file(char *path)
 {
   char *end;
@@ -181,6 +182,7 @@ static my_bool is_config_file(char *path)
   }
   return 0;
 }
+#endif
 
 static int compare_filenames(const void* a, const void* b) {
   const char *name_a = *(const char **)a;
